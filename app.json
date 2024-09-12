@@ -4,9 +4,12 @@
     "slug": "Bazaario",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "icon": "./assets/images/icon2.png",
+    "scheme": "voidexiled.bazaario",
+    "userInterfaceStyle": "dark",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -17,9 +20,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "foregroundImage": "./assets/images/icon2.png",
+        "backgroundColor": "#1a1a1a"
+      },
+      "package": "com.voidexiled.bazaario"
     },
     "web": {
       "bundler": "metro",
@@ -31,6 +35,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "244ce046-84f8-4fa9-893b-d889d809697b"
+      }
+    },
+    "owner": "voidexiled"
   }
 }
