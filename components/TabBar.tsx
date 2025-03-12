@@ -28,6 +28,8 @@ export const TabBar: React.FC<BottomTabBarProps> = ({
         justifyContent: "space-between",
         alignItems: "center",
         backgroundColor: theme.colors.dark.base.background,
+        elevation: 6,
+        shadowColor: "#000",
       }}
     >
       {state.routes.map((route, index) => {

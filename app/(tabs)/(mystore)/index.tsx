@@ -1,19 +1,15 @@
-import {
-  FlatList,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  View,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
 import { theme } from "@/constants/Theme";
-import StyledText from "@/components/StyledText";
 import { hp, wp } from "@/helpers/common";
-import { FlashList } from "@shopify/flash-list";
-import ProductsHorizontalList from "@/components/mystore/ProductsHorizontalList";
+import ProductsHorizontalList from "@/components/mystore/product/ProductsHorizontalList";
 import { useQuery } from "@tanstack/react-query";
 import { getProductsByUserId } from "@/api/products";
 import { useAuth } from "@/contexts/AuthContext";
+import { getServicesByUserId } from "@/api/services";
+import ServicesHorizontalList from "@/components/mystore/service/ServicesHorizontalList";
+import TabPageWrapper from "@/components/wrappers/TabPageWrapper";
+import styled from "styled-components/native";
 
 const store_sections = [
   { key: "products", name: "Productos" },
@@ -31,36 +27,40 @@ const index = () => {
     isFetching: productsFetching,
     refetch: refetchProducts,
   } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["products", user?.id],
     queryFn: () => getProductsByUserId(user?.id!),
+    retry: true,
+  });
+
+  const {
+    data: servicesData,
+    error: servicesError,
+    isFetching: servicesFetching,
+    refetch: refetchServices,
+  } = useQuery({
+    queryKey: ["services", user?.id],
+    queryFn: () => getServicesByUserId(user?.id!),
     retry: true,
   });
 
   const handleOnRefresh = async () => {
     setRefreshing(true);
     await refetchProducts();
+    await refetchServices();
     setRefreshing(false);
   };
-  useEffect(() => {
-    if (productsError) {
-      console.log(productsError);
-    }
-    console.log(productsData);
-  }, [productsData]);
 
   return (
-    <ScrollView
-      style={[styles.container]}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={handleOnRefresh}
-          //tintColor={theme.colors.dark.accent.background}
-        />
-      }
+    <TabPageWrapper
+      refreshControl={true}
+      refreshing={refreshing}
+      onRefresh={handleOnRefresh}
     >
-      <ProductsHorizontalList products={productsData} />
-    </ScrollView>
+      <ContainerView>
+        <ProductsHorizontalList products={productsData} />
+        <ServicesHorizontalList services={servicesData} />
+      </ContainerView>
+    </TabPageWrapper>
   );
 };
 
@@ -69,12 +69,14 @@ export default index;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    gap: 5,
-    paddingVertical: 10,
     paddingHorizontal: wp(4),
-
+    paddingVertical: hp(3),
     height: "100%",
     width: "100%",
     backgroundColor: theme.colors.dark.base.background_active,
   },
 });
+
+const ContainerView = styled.View`
+  gap: 15px;
+`;

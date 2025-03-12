@@ -9,7 +9,7 @@ import {
 import React, { useRef, useState } from "react";
 import BackButton from "@/components/BackButton";
 import ScreenWrapper from "@/components/ScreenWrapper";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { hp, wp } from "../helpers/common";
 import { theme } from "@/constants/Theme";
 import EmailField from "@/components/form/EmailField";
@@ -67,12 +67,6 @@ const login = () => {
         errorMessage: "El campo correo debe iniciar con 'l'",
       });
     }
-    // if (noControlRef.current && noControlRef.current.length < 9) {
-    //   temporalErrors.push({
-    //     fieldName: "email",
-    //     errorMessage: "El campo correo debe tener 9 caracteres",
-    //   });
-    // }
 
     setErrors(temporalErrors);
     if (temporalErrors.length > 0) {
@@ -146,6 +140,7 @@ const login = () => {
                 maxLength={9}
                 onChangeText={(text) => {
                   noControlRef.current = text;
+                  validateFields();
                 }}
                 containerStyle={{
                   marginTop: 25,
@@ -167,6 +162,7 @@ const login = () => {
                 setHidePassword={setHidePassword}
                 onChangeText={(text) => {
                   passwordRef.current = text;
+                  validateFields();
                 }}
                 containerStyle={{
                   marginTop: 25,

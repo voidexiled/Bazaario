@@ -4,6 +4,7 @@ import { supabase } from "@/lib/supabase";
 import Button from "@/components/Button";
 import { theme } from "@/constants/Theme";
 import StyledText from "@/components/StyledText";
+import { hp, wp } from "@/helpers/common";
 
 const index = () => {
   return (
@@ -21,5 +22,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: theme.colors.dark.base.background_active,
+    paddingVertical: hp(3),
+    paddingHorizontal: wp(4),
   },
 });

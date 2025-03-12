@@ -405,6 +405,9 @@ const signUp = () => {
                 disabled
                 onTouchEnd={() => setOpenPickDate(true)}
                 value={date?.toLocaleDateString()}
+                onChangeText={() => {
+                  validateFields();
+                }}
                 containerStyle={{
                   marginTop: 25,
                 }}

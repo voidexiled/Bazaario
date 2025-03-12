@@ -48,7 +48,7 @@ const _layout = () => {
         name="(home)"
         options={{
           title: "Inicio",
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ color, size, focused }) => (
             <Home01Icon color={color} size={size} />
           ),
         }}

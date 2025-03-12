@@ -28,6 +28,7 @@ export default function _layout() {
         <Stack.Screen
           name="(products)"
           options={{
+            headerShown: true,
             header: (props) => (
               <View
                 style={{
@@ -38,14 +39,20 @@ export default function _layout() {
                   paddingVertical: 20,
                   backgroundColor: theme.colors.dark.base.background,
                   position: "relative",
+                  elevation: 6,
+                  shadowColor: "#000",
                 }}
               >
                 <BackButton
                   router={router}
-                  style={{
+                  wrapperStyle={{
                     position: "absolute",
                     top: 20,
                     left: wp(4),
+                  }}
+                  style={{
+                    backgroundColor:
+                      theme.colors.dark.base.background_low_opacity,
                   }}
                 />
                 <StyledText
@@ -58,6 +65,54 @@ export default function _layout() {
               </View>
             ),
             title: "Productos",
+            headerStyle: {
+              backgroundColor: theme.colors.dark.base.background,
+            },
+            headerTitleStyle: {
+              color: theme.colors.dark.base.text,
+            },
+          }}
+        />
+        <Stack.Screen
+          name="(services)"
+          options={{
+            headerShown: true,
+            header: (props) => (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingHorizontal: wp(4),
+                  paddingVertical: 20,
+                  backgroundColor: theme.colors.dark.base.background,
+                  position: "relative",
+                  elevation: 6,
+                  shadowColor: "#000",
+                }}
+              >
+                <BackButton
+                  router={router}
+                  wrapperStyle={{
+                    position: "absolute",
+                    top: 20,
+                    left: wp(4),
+                  }}
+                  style={{
+                    backgroundColor:
+                      theme.colors.dark.base.background_low_opacity,
+                  }}
+                />
+                <StyledText
+                  style={{
+                    fontSize: hp(2.5),
+                  }}
+                >
+                  {props.options.title}
+                </StyledText>
+              </View>
+            ),
+            title: "Servicios",
             headerStyle: {
               backgroundColor: theme.colors.dark.base.background,
             },

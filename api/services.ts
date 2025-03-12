@@ -1,20 +1,22 @@
+import type { Tables } from "@/database.types";
 import { supabase } from "@/lib/supabase";
 
-export const getProductsByUserId = async (id: string) => {
+export const getServicesByUserId = async (id: string) => {
   const { data, error } = await supabase
-    .from("products")
-    .select("*, product_images(*), product_reviews(*)")
+    .from("services")
+    .select("*, service_images(*), service_reviews(*)")
     .eq("user_uuid", id);
   if (error) {
     console.log(error);
     throw error;
   }
+
   return data;
 };
 
-export const getProductById = async (id: string) => {
+export const getServiceById = async (id: string) => {
   const { data, error } = await supabase
-    .from("products")
+    .from("services")
     .select("*")
     .eq("id", id)
     .single();

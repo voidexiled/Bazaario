@@ -1,25 +1,20 @@
-import {
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+import { RefreshControl, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
 import { theme } from "@/constants/Theme";
 import { FlashList } from "@shopify/flash-list";
 import { useAuth } from "@/contexts/AuthContext";
 import { useQuery } from "@tanstack/react-query";
-import { getProductsByUserId } from "@/api/products";
-import ProductView from "@/components/mystore/product/ProductView";
 import { hp, wp } from "@/helpers/common";
+import { getServicesByUserId } from "@/api/services";
+import ServiceView from "@/components/mystore/service/ServiceView";
 
 const index = () => {
   const { user } = useAuth();
   const [refreshing, setRefreshing] = useState(false);
   const { data, error, refetch } = useQuery({
-    queryKey: ["products", user?.id],
-    queryFn: () => getProductsByUserId(user?.id!),
+    queryKey: ["services", user?.id],
+    queryFn: () => getServicesByUserId(user?.id!),
+    retry: true,
   });
 
   const handleOnRefresh = async () => {
@@ -27,12 +22,6 @@ const index = () => {
     await refetch();
     setRefreshing(false);
   };
-
-  useEffect(() => {
-    data?.map((product) => {
-      console.log(product.product_images)
-    })
-  }, [data])
 
   return (
     <View style={[styles.container]}>
@@ -44,10 +33,6 @@ const index = () => {
         }}
       >
         <FlashList
-          contentContainerStyle={{
-            paddingHorizontal: wp(4),
-            paddingVertical: hp(3),
-          }}
           horizontal={false}
           nestedScrollEnabled
           showsVerticalScrollIndicator={false}
@@ -55,13 +40,12 @@ const index = () => {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={handleOnRefresh}
-              //tintColor={theme.colors.dark.accent.background}
             />
           }
           estimatedItemSize={300}
           data={data}
-          renderItem={(product) => {
-            return <ProductView product={product.item} />;
+          renderItem={(service) => {
+            return <ServiceView service={service.item} />;
           }}
           ListEmptyComponent={() => (
             <View
@@ -72,7 +56,7 @@ const index = () => {
               }}
             >
               <Text style={{ color: theme.colors.dark.base.secondary_text }}>
-                No hay productos
+                No hay servicios
               </Text>
             </View>
           )}
@@ -92,5 +76,8 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     backgroundColor: theme.colors.dark.base.background_active,
+
+    paddingHorizontal: wp(4),
+    paddingVertical: hp(3),
   },
 });

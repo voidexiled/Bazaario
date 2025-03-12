@@ -328,6 +328,112 @@ export type Database = {
           },
         ]
       }
+      service_images: {
+        Row: {
+          id: string
+          image_url: string
+          service_uuid: string
+        }
+        Insert: {
+          id?: string
+          image_url: string
+          service_uuid: string
+        }
+        Update: {
+          id?: string
+          image_url?: string
+          service_uuid?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_images_service_uuid_fkey"
+            columns: ["service_uuid"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      service_reviews: {
+        Row: {
+          created_at: string | null
+          id: string
+          rating: number
+          review: string | null
+          service_uuid: string
+          user_uuid: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          rating: number
+          review?: string | null
+          service_uuid: string
+          user_uuid?: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          rating?: number
+          review?: string | null
+          service_uuid?: string
+          user_uuid?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_reviews_service_uuid_fkey"
+            columns: ["service_uuid"]
+            isOneToOne: false
+            referencedRelation: "services"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_reviews_user_uuid_fkey"
+            columns: ["user_uuid"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      services: {
+        Row: {
+          category: number[] | null
+          description: string | null
+          id: string
+          name: string
+          price: number | null
+          user_uuid: string
+          variableprice: boolean
+        }
+        Insert: {
+          category?: number[] | null
+          description?: string | null
+          id?: string
+          name: string
+          price?: number | null
+          user_uuid?: string
+          variableprice?: boolean
+        }
+        Update: {
+          category?: number[] | null
+          description?: string | null
+          id?: string
+          name?: string
+          price?: number | null
+          user_uuid?: string
+          variableprice?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "services_user_uuid_fkey"
+            columns: ["user_uuid"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tags: {
         Row: {
           id: number

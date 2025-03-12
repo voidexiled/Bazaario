@@ -3,6 +3,7 @@ import React from "react";
 import { theme } from "@/constants/Theme";
 import Button from "@/components/Button";
 import { supabase } from "@/lib/supabase";
+import { hp, wp } from "@/helpers/common";
 
 const index = () => {
   const signOut = async () => {
@@ -28,5 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: theme.colors.dark.base.background_active,
+    paddingVertical: hp(3),
+    paddingHorizontal: wp(4),
   },
 });
